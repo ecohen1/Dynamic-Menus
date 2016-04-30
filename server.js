@@ -1,5 +1,34 @@
 var express = require("express"),
-    app = express();
+    app = express(),
+    mongoose = require("mongoose");
+
+mongoose.connect("mongodb://nuit:nuitrules@ds011732.mlab.com:11732/nuit_users");
+var User = {};
+var db = mongoose.connection;
+db.once('open', function() {
+
+  var userSchema = mongoose.Schema({
+    userName: String,
+    userType: String
+  });
+  User = mongoose.model("User", userSchema);
+
+  // var morty = new User({
+  //   userName: 'morty',
+  //   userType: 'faculty'
+  // });
+  //
+  // morty.save(function(err,data){
+  //   if (err) console.log(err);
+  //   else console.log('Saved : ', data );
+  // });
+});
+
+var menus = {
+  "student": ["paint","the","rock"],
+  "faculty": ["get","tenured","fast"],
+  "staff": ["i","work","here"]
+}
 
 app.use(function (req, res, next) {
 
@@ -20,16 +49,12 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get("/:userType",function(req,res){
-  if (req.params.userType == "student"){
+app.get("/:userName",function(req,res){
+  User.findOne({userName:req.params.userName},function(err, user){
     res.json({
-      "options": ["Paint the rock!"]
+      menu: menus[user.userType]
     });
-  } else if (req.params.userType == "professor") {
-    res.json({
-      "options": ["How to be tenured"]
-    });
-  }
+  });
 });
 
 app.listen(3000);

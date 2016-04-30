@@ -19,11 +19,11 @@
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
           if (xhttp.readyState == 4 && xhttp.status == 200) {
-            data = JSON.parse(xhttp.responseText).options;
-            resHandler(data);
+            data = JSON.parse(xhttp.responseText);
+            resHandler(data.menu);
           }
       };
-      xhttp.open("GET", "http://localhost:3000/professor", true);
+      xhttp.open("GET", "http://localhost:3000/eli", true);
       xhttp.send();
     });
   </script>
