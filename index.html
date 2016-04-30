@@ -15,6 +15,7 @@
           resString += "<li><a href='#'>"+data[i]+"</a></li>";
         }
         $('.dropdown-menu').html(resString);
+        $('#welcome').text("Welcome, "+user);
       }
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
@@ -47,6 +48,8 @@
       </ul>
       </div>
     </nav>
+
+    <p id='welcome'></p>
 
     <p>
       Click below to switch your NU Role!
