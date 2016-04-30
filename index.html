@@ -8,13 +8,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script type="text/javascript">
-    $(document).ready(function(){
+    var reset = function(user){
       var resString = "";
       var resHandler = function(data){
         for (var i=0;i<data.length;i++){
           resString += "<li><a href='#'>"+data[i]+"</a></li>";
         }
-        $('.dropdown-menu').append(resString);
+        $('.dropdown-menu').html(resString);
       }
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
@@ -23,12 +23,14 @@
             resHandler(data.menu);
           }
       };
-      xhttp.open("GET", "http://localhost:3000/eli", true);
+      xhttp.open("GET", "http://localhost:3000/"+user, true);
       xhttp.send();
-    });
+    }
+    reset('eli');
   </script>
 </head>
 <body>
+
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -45,5 +47,13 @@
       </ul>
       </div>
     </nav>
+
+    <p>
+      Click below to switch your NU Role!
+    </p>
+    <button onClick="reset('eli')">Student</button>
+    <button onClick="reset('morty')">Faculty</button>
+    <button onClick="reset('jon')">Staff</button>
+
   </body>
   </html>
